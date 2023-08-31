@@ -1,7 +1,7 @@
 {
 	"name": "@styleshit/locker",
 	"version": "0.0.1",
-	"description": "Lock and unlock unstable APIs in your application",
+	"description": "Control access to experimental or unstable methods in TypeScript applications with 100% type-safety.",
 	"type": "module",
 	"main": "index.js",
 	"scripts": {
