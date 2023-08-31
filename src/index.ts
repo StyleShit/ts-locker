@@ -22,9 +22,7 @@ export function createLocker(key: symbol) {
 		return unlockCallbacks.has(data as UnlockCallback);
 	}
 
-	function unlock<T extends UnlockCallback | unknown>(
-		data: T,
-	): T extends UnlockCallback ? ReturnType<T> : T {
+	function unlock<T>(data: T): T extends UnlockCallback ? ReturnType<T> : T {
 		if (isUnlockCallback(data)) {
 			return data(key);
 		}
