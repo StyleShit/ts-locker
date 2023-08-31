@@ -27,14 +27,13 @@ describe('Locker', () => {
 	it('should throw an error when unlocking with an invalid key', () => {
 		// Arrange.
 		const data = { a: 1 };
-		const locker1 = createLocker(Symbol('key-1'));
-		const locker2 = createLocker(Symbol('key-2'));
+		const locker = createLocker(Symbol('custom-key'));
 
 		// Act.
-		const locked = locker1.lock(data);
+		const locked = locker.lock(data);
 
 		// Assert.
-		expect(() => locker2.unlock(locked)).toThrow('Invalid key!');
+		expect(() => locked(Symbol('invalid-key'))).toThrow('Invalid key!');
 	});
 
 	it("should return the given data if it's not locked", () => {

@@ -1,9 +1,10 @@
 const defaultKey = Symbol('default-key');
-const unlockCallbacks = new WeakSet<UnlockCallback>();
 
 type UnlockCallback<T = any> = (unlockKey: symbol) => T;
 
 export function createLocker(key: symbol) {
+	const unlockCallbacks = new WeakSet<UnlockCallback>();
+
 	function lock<T>(data: T) {
 		const unlockCallback = (unlockKey: symbol): T => {
 			if (unlockKey !== key) {
