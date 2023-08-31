@@ -8,6 +8,7 @@
 		"beautify": "prettier --write ./",
 		"lint": "eslint ./src",
 		"test": "jest",
+		"test:coverage": "jest --coverage",
 		"build": "tsup src/index.ts --format cjs,esm --dts"
 	},
 	"author": "StyleShit",
