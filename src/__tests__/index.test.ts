@@ -36,4 +36,15 @@ describe('Locker', () => {
 		// Assert.
 		expect(() => locker2.unlock(locked)).toThrow('Invalid key!');
 	});
+
+	it("should return the given data if it's not locked", () => {
+		// Arrange.
+		const data = { a: 1 };
+
+		// Act.
+		const unlocked = unlock(data);
+
+		// Assert.
+		expect(unlocked).toBe(data);
+	});
 });
