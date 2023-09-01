@@ -1,6 +1,7 @@
 {
 	"name": "@styleshit/locker",
 	"version": "0.0.1",
+	"private": false,
 	"description": "Control access to experimental or unstable methods in TypeScript applications with 100% type-safety.",
 	"author": "StyleShit",
 	"license": "MIT",
