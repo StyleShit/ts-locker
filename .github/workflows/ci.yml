@@ -1,0 +1,42 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    ci:
+        name: Lint, Test and Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout source code
+              uses: actions/checkout@v3
+
+            - name: Install Node.js 18.x
+              uses: actions/setup-node@v3
+              with:
+                  cache: 'npm'
+                  node-version: 18.x
+
+            - name: Install Deps
+              run: npm ci
+
+            - name: Run Lint
+              run: npm run lint
+
+            - name: Run Test
+              run: npm run test:coverage
+
+            - name: Cache build
+              id: cache-build
+              uses: actions/cache@v3
+              env:
+                  cache-name: cache-build
+              with:
+                  path: ./node_modules/.cache/nx
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
+            - name: Run Build
+              run: npm run build
