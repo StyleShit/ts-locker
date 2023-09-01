@@ -5,6 +5,7 @@
 	"type": "module",
 	"main": "index.js",
 	"scripts": {
+		"prettier": "prettier --check ./",
 		"beautify": "prettier --write ./",
 		"lint": "concurrently -n eslint,tsc -c magenta,green \"eslint ./src\" \"tsc\"",
 		"test": "jest",
