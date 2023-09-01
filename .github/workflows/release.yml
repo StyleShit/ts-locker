@@ -1,0 +1,45 @@
+name: Release
+
+on:
+    push:
+        branches:
+            - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions: {}
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+
+        if: github.repository == 'StyleShit/locker'
+
+        permissions:
+            contents: write # to create release (changesets/action)
+            issues: write # to post issue comments (changesets/action)
+            pull-requests: write # to create pull request (changesets/action)
+
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - uses: actions/setup-node@v3
+              with:
+                  cache: 'npm'
+                  node-version: 18.x
+
+            - run: npm ci
+
+            - name: Create release PR
+              id: changesets
+              uses: changesets/action@v1
+              with:
+                  publish: npm run release
+                  commit: 'chore(release): publish'
+                  title: 'Release package'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
