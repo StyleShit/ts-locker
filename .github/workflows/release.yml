@@ -33,6 +33,19 @@ jobs:
 
             - run: npm ci
 
+            - name: Cache build
+              id: cache-build
+              uses: actions/cache@v3
+              env:
+                  cache-name: cache-build
+              with:
+                  path: ./dist
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
             - name: Create release PR or publish
               id: changesets
               uses: changesets/action@v1
